@@ -6,11 +6,9 @@ function App() {
   const [test, setTest] = useState([]);
 
   useEffect(() => {
-    // Hint: here is some pseudocode to guide you
-    fetch(`http://${config.server_host}:${config.server_port}/test`)
+    fetch(`http://${config.server_host}:${config.server_port}/routes`)
       .then(res => res.json())
       .then(resJson => {
-        console.log(resJson)
         setTest(resJson)
       })
   }, []);
@@ -18,7 +16,7 @@ function App() {
   return (
     <div className="App">
       {
-        test.map(item => <div>{item.name}</div>)
+        test.map(item => <div>Airline: {item.Airline}, Source: {item.Source}, Destination: {item.Destination}</div>)
       }
     </div>
   );

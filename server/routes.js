@@ -26,6 +26,22 @@ const test = async function(req, res) {
   });
 }
 
+const routes = async function(req, res) {
+  connection.query(`
+    SELECT *
+    FROM Routes
+    LIMIT 10
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.send(data)
+    }
+  });
+}
+
 module.exports = {
   test,
+  routes
 }
