@@ -1,11 +1,5 @@
-# Getting Started with Create React App
+Description: The motivation for our application was to streamline the booking process for plane tickets and the most important part of anyone’s flight, selecting in-flight entertainment. By providing our users with thematically appropriate entertainment, we hope to make the process of traveling more enjoyable and culturally educational.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+server: The backend of the project. This is where the node server handles all API requests and deals with routing.
 
-## Available Scripts
-
-In server, to run the backend, run 
-### npm start
-
-In client, to run the frontend, run
-### npm start
+client: The react frontend of our project.
