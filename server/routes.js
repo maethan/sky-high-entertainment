@@ -96,6 +96,10 @@ const flight_search = async function(req, res) {
   });
 }
 
+/** Query for searching movies where the parameters are all optional. These parameters include a movies name, min/max imdb score, 
+ * language, min/max budget, countries of production, production companies, min/max runtime, and up to 3 genres. Additionally, 
+ * pagination is done.
+ */
 const movie_search = async function(req, res) {
   const minImdbScore = req.query.minImdbScore ?? 0;
   const maxImdbScore = req.query.maxImdbScore ?? 10;
