@@ -9,6 +9,7 @@ function App() {
   const [movieSearch, setMovieSesarch] = useState([]);
   const [getMovie, setGetMovie] = useState([]);
   const [getFlight, setGetFlight] = useState([]);
+  const [getSegmentRecommendations, setSegmentRecommendations] = useState([]);
 
   //constants just for testing
   const search = 'atl';
@@ -52,6 +53,11 @@ function App() {
       setGetFlight(resJson)
     })
 
+    fetch(`http://${config.server_host}:${config.server_port}/get_segment_recommendations?flightID=6&segments=1&genre1=comedy&genre2=documentary`)
+    .then(res => res.json())
+    .then(resJson => {
+      setSegmentRecommendations(resJson)
+    })
   }, []);
 
   return (
@@ -73,6 +79,9 @@ function App() {
       }
       {
         getFlight.map(item => <div>Flight GET Flight: {item.FlightID}, Start: {item.StartingAirport}, End: {item.DestinationAirport}, Duration: {item.TravelDuration}</div>)
+      }
+      {
+        getSegmentRecommendations.map(item => <div>Rec1: {item.first}, Rec2: {item.second}, Rec3: {item.third}</div>)
       }
     </div>
   );
