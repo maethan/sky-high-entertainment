@@ -16,6 +16,7 @@ app.get('/movie_search', routes.movie_search);
 app.get('/get_movie', routes.get_movie);
 app.get('/get_flight', routes.get_flight);
 app.get('/get_segment_recommendations', routes.segment_recommendations);
+app.get('/airport_aggregations', routes.airport_aggregations);
 
 app.listen(config.server_port, () => {
   console.log(`Server running at http://${config.server_host}:${config.server_port}/`)

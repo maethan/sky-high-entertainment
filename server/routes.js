@@ -351,6 +351,35 @@ const segment_recommendations = async function(req, res) {
   })
 }
 
+const airport_aggregations = (req, res) => {
+  const airport = req.query.airport ?? "";
+
+  connection.query(`
+    SELECT f.StartingAirport,
+      f.DestinationAirport,
+      a.AirportID,
+      a.Name,
+      a.City,
+      COUNT(*) as Count,
+      AVG(BaseFare) as AvgBase,
+      AVG(TotalFare) as AvgTotalFare,
+      AVG(TravelDuration) as AvgDuration
+    FROM FlightPrices f
+    LEFT JOIN Airports a
+    ON f.DestinationAirport = a.IATA
+    WHERE f.StartingAirport = '${airport}'
+    GROUP BY StartingAirport, DestinationAirport
+    ORDER BY StartingAirport ASC, Count DESC;
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log('error searching for airport: ', err);
+      res.json({});
+    } else {
+      res.send(data)
+    }
+  });
+}
+
 module.exports = {
   test,
   routes,
@@ -359,5 +388,6 @@ module.exports = {
   movie_search,
   get_movie,
   get_flight,
-  segment_recommendations
+  segment_recommendations,
+  airport_aggregations,
 }
