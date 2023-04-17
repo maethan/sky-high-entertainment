@@ -136,10 +136,52 @@ const movie_search = async function(req, res) {
   });
 }
 
+/** Query to get a movie given its imdb id
+ */
+const get_movie = async function(req, res) {
+  const imdbID = req.query.imdbID;
+  console.log("imdbID: ", imdbID);
+  connection.query(`
+    SELECT *
+    FROM Movies
+    WHERE imdbID = '${imdbID}'
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log('error searching for movies: ', err);
+      res.json({});
+    } else {
+      console.log('Movie data: ', data)
+      res.send(data)
+    }
+  });
+}
+
+/** Query to get a flight given its flight id
+ */
+ const get_flight = async function(req, res) {
+  const flightID = req.query.flightID;
+  console.log("flightID: ", flightID);
+  connection.query(`
+    SELECT *
+    FROM FlightPrices
+    WHERE FlightID = '${flightID}'
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log('error searching for flights: ', err);
+      res.json({});
+    } else {
+      console.log('Flight data: ', data)
+      res.send(data)
+    }
+  });
+}
+
 module.exports = {
   test,
   routes,
   airport_search,
   flight_search,
   movie_search,
+  get_movie,
+  get_flight,
 }

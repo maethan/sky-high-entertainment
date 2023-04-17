@@ -7,8 +7,13 @@ function App() {
   const [airportSearch, setAirportSearch] = useState([]);
   const [flightSearch, setFlightSearch] = useState([]);
   const [movieSearch, setMovieSesarch] = useState([]);
+  const [getMovie, setGetMovie] = useState([]);
+  const [getFlight, setGetFlight] = useState([]);
 
-  const search = 'atl'
+  //constants just for testing
+  const search = 'atl';
+  const imdbID = 'tt0092067';
+  const flightID = 26;
 
   useEffect(() => {
     fetch(`http://${config.server_host}:${config.server_port}/routes`)
@@ -35,6 +40,18 @@ function App() {
       setMovieSesarch(resJson)
     })
 
+    fetch(`http://${config.server_host}:${config.server_port}/get_movie?imdbID=${imdbID}`)
+    .then(res => res.json())
+    .then(resJson => {
+      setGetMovie(resJson)
+    })
+
+    fetch(`http://${config.server_host}:${config.server_port}/get_flight?flightID=${flightID}`)
+    .then(res => res.json())
+    .then(resJson => {
+      setGetFlight(resJson)
+    })
+
   }, []);
 
   return (
@@ -50,6 +67,12 @@ function App() {
       }
       {
         movieSearch.map(item => <div>Movie title: {item.name}</div>)
+      }
+      {
+        getMovie.map(item => <div>Movie title GET MOVIE: {item.name}</div>)
+      }
+      {
+        getFlight.map(item => <div>Flight GET Flight: {item.FlightID}, Start: {item.StartingAirport}, End: {item.DestinationAirport}, Duration: {item.TravelDuration}</div>)
       }
     </div>
   );
