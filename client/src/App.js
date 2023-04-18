@@ -10,6 +10,7 @@ function App() {
   const [getMovie, setGetMovie] = useState([]);
   const [getFlight, setGetFlight] = useState([]);
   const [getSegmentRecommendations, setSegmentRecommendations] = useState([]);
+  const [getRouteAirlines, setRouteAirlines] = useState([]);
 
   //constants just for testing
   const search = 'atl';
@@ -58,6 +59,12 @@ function App() {
     .then(resJson => {
       setSegmentRecommendations(resJson)
     })
+
+    fetch(`http://${config.server_host}:${config.server_port}/get_route_airlines?source=ROB&destination=FNA`)
+    .then(res => res.json())
+    .then(resJson => {
+      setRouteAirlines(resJson)
+    })
   }, []);
 
   return (
@@ -82,6 +89,9 @@ function App() {
       }
       {
         getSegmentRecommendations.map(item => <div>Rec1: {item.first}, Rec2: {item.second}, Rec3: {item.third}</div>)
+      }
+      {
+        getRouteAirlines.map(item => <div>Airline Name: {item.Name}</div>)
       }
     </div>
   );

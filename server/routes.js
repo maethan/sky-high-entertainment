@@ -380,6 +380,37 @@ const airport_aggregations = (req, res) => {
   });
 }
 
+
+/** Given source and destination airports, output all airlines that are available for this specific route
+ */
+ const get_route_airlines = async function(req, res) {
+  const source = req.query.source;
+  const destination = req.query.destination;
+
+  if (!source || !destination) {
+    console.log("need both source and destination airports");
+    res.json({});
+  }
+
+  connection.query(`
+    WITH AvailableRoutes AS (
+        SELECT *
+        FROM Routes
+        WHERE Source = '${source}' AND Destination = '${destination}'
+    )
+    SELECT IATA, Country, Name, Callsign
+    FROM AvailableRoutes AR JOIN Airlines AL ON AR.Airline = AL.IATA
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log('error searching for routes: ', err);
+      res.json({});
+    } else {
+      console.log('Route data: ', data)
+      res.send(data)
+    }
+  });
+}
+
 module.exports = {
   test,
   routes,
@@ -390,4 +421,7 @@ module.exports = {
   get_flight,
   segment_recommendations,
   airport_aggregations,
+  get_route_airlines,
+  airport_aggregations,
+  get_route_airlines,
 }
