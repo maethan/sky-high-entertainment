@@ -3,3 +3,4 @@ Description: The motivation for our application was to streamline the booking pr
 server: The backend of the project. This is where the node server handles all API requests and deals with routing.
 
 client: The react frontend of our project.
+
